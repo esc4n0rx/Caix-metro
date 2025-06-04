@@ -20,17 +20,10 @@ export async function GET(
       return NextResponse.json({ success: false, message: 'Token inválido' }, { status: 401 })
     }
 
+    // Buscar remessa
     const { data: remessa, error } = await supabaseAdmin
       .from('cxativo_remessas')
-      .select(`
-        *,
-        usuario:cxativo_users(nome),
-        ativos:cxativo_remessa_ativos(
-          id,
-          quantidade,
-          tipo_ativo:cxativo_tipos_ativos(id, nome, codigo)
-        )
-      `)
+      .select('*')
       .eq('id', params.id)
       .single()
 
@@ -41,9 +34,45 @@ export async function GET(
       }, { status: 404 })
     }
 
+    // Buscar usuário
+    const { data: usuario } = await supabaseAdmin
+      .from('cxativo_users')
+      .select('nome')
+      .eq('id', remessa.usuario_id)
+      .single()
+
+    // Buscar ativos da remessa
+    const { data: ativos } = await supabaseAdmin
+      .from('cxativo_remessa_ativos')
+      .select('*')
+      .eq('remessa_id', remessa.id)
+
+    // Buscar tipos de ativos
+    const tipoAtivoIds = ativos?.map(a => a.tipo_ativo_id) || []
+    const { data: tiposAtivos } = await supabaseAdmin
+      .from('cxativo_tipos_ativos')
+      .select('*')
+      .in('id', tipoAtivoIds)
+
+    // Formatar dados
+    const ativosFormatados = ativos?.map(ativo => {
+      const tipoAtivo = tiposAtivos?.find(t => t.id === ativo.tipo_ativo_id)
+      return {
+        ...ativo,
+        tipo_ativo_nome: tipoAtivo?.nome || 'Tipo não encontrado',
+        tipo_ativo_codigo: tipoAtivo?.codigo || 'N/A'
+      }
+    }) || []
+
+    const remessaFormatada = {
+      ...remessa,
+      usuario_nome: usuario?.nome || 'Usuário não encontrado',
+      ativos: ativosFormatados
+    }
+
     return NextResponse.json({
       success: true,
-      data: remessa
+      data: remessaFormatada
     })
 
   } catch (error) {
@@ -144,15 +173,7 @@ export async function PATCH(
         data_atualizacao: new Date().toISOString()
       })
       .eq('id', params.id)
-      .select(`
-        *,
-        usuario:cxativo_users(nome),
-        ativos:cxativo_remessa_ativos(
-          id,
-          quantidade,
-          tipo_ativo:cxativo_tipos_ativos(id, nome, codigo)
-        )
-      `)
+      .select()
       .single()
 
     if (error) {
@@ -163,9 +184,42 @@ export async function PATCH(
       }, { status: 500 })
     }
 
+    // Buscar dados relacionados
+    const { data: usuario } = await supabaseAdmin
+      .from('cxativo_users')
+      .select('nome')
+      .eq('id', remessaAtualizada.usuario_id)
+      .single()
+
+    const { data: ativos } = await supabaseAdmin
+      .from('cxativo_remessa_ativos')
+      .select('*')
+      .eq('remessa_id', remessaAtualizada.id)
+
+    const tipoAtivoIds = ativos?.map(a => a.tipo_ativo_id) || []
+    const { data: tiposAtivos } = await supabaseAdmin
+      .from('cxativo_tipos_ativos')
+      .select('*')
+      .in('id', tipoAtivoIds)
+
+    const ativosFormatados = ativos?.map(ativo => {
+      const tipoAtivo = tiposAtivos?.find(t => t.id === ativo.tipo_ativo_id)
+      return {
+        ...ativo,
+        tipo_ativo_nome: tipoAtivo?.nome || 'Tipo não encontrado',
+        tipo_ativo_codigo: tipoAtivo?.codigo || 'N/A'
+      }
+    }) || []
+
+    const remessaFormatada = {
+      ...remessaAtualizada,
+      usuario_nome: usuario?.nome || 'Usuário não encontrado',
+      ativos: ativosFormatados
+    }
+
     return NextResponse.json({
       success: true,
-      data: remessaAtualizada,
+      data: remessaFormatada,
       message: `Remessa ${status === 'concluido' ? 'concluída' : 'cancelada'} com sucesso`
     })
 
