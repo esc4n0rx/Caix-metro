@@ -42,7 +42,7 @@ export default function SobrePage() {
                 </div>
                 <div>
                   <span className="font-medium">Última Atualização:</span>
-                  <div className="text-muted-foreground">Janeiro 2024</div>
+                  <div className="text-muted-foreground">Junho 2025</div>
                 </div>
                 <div>
                   <span className="font-medium">Tecnologia:</span>
@@ -119,7 +119,7 @@ export default function SobrePage() {
           </CardContent>
         </Card>
 
-        {/* Logos e Contato */}
+        Logos e Contato
         <Card>
           <CardHeader>
             <CardTitle>Empresa</CardTitle>
@@ -129,16 +129,9 @@ export default function SobrePage() {
             <div className="flex items-center justify-center gap-8 py-8">
               <div className="text-center">
                 <div className="bg-white rounded-lg p-4 shadow-lg mb-4">
-                  <span className="text-3xl font-bold text-orange-600">HORTIFRUTI</span>
+                  <span className="text-3xl font-bold text-orange-600">HORTIFRUTI - NATURAL DA TERRA</span>
                 </div>
                 <p className="text-sm text-muted-foreground">Marca Principal</p>
-              </div>
-
-              <div className="text-center">
-                <div className="bg-white rounded-lg p-4 shadow-lg mb-4">
-                  <span className="text-2xl font-semibold text-green-700">NATURAL DA TERRA</span>
-                </div>
-                <p className="text-sm text-muted-foreground">Linha Premium</p>
               </div>
             </div>
 
@@ -149,7 +142,7 @@ export default function SobrePage() {
                 Sistema desenvolvido para otimizar a logística de ativos reutilizáveis
               </p>
               <p className="text-xs text-muted-foreground">
-                © 2024 Hortifruti Natural da Terra. Todos os direitos reservados.
+                © 2025 Hortifruti Natural da Terra. Todos os direitos reservados.
               </p>
             </div>
           </CardContent>
