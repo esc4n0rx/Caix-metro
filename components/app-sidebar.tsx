@@ -1,3 +1,4 @@
+// components/app-sidebar.tsx
 "use client"
 
 import { useRouter, usePathname } from "next/navigation"
@@ -15,7 +16,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { LayoutDashboard, Send, RotateCcw, ArrowLeftRight, BarChart3, Settings, Info, LogOut } from "lucide-react"
+import { LayoutDashboard, Send, RotateCcw, ArrowLeftRight, BarChart3, Settings, Info, LogOut, Upload } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
 import { User } from "@/types/auth"
 
@@ -39,6 +40,11 @@ const menuItems = [
     title: "Transferência",
     url: "/dashboard/transferencia",
     icon: ArrowLeftRight,
+  },
+  {
+    title: "Upload de Movimentos",
+    url: "/dashboard/upload-movimentos",
+    icon: Upload,
   },
   {
     title: "Relatórios",
