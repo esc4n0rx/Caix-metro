@@ -1,143 +1,138 @@
 "use client"
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { User, AuthResponse } from '@/types/auth'
 
 interface AuthContextType {
   user: User | null
-  login: (email: string, password: string) => Promise<AuthResponse>
-  register: (nome: string, email: string, password: string, cd: string) => Promise<AuthResponse>
-  logout: () => void
-  isLoading: boolean
+  token: string | null
   isAuthenticated: boolean
+  isLoading: boolean
+  login: (email: string, password: string) => Promise<{ success: boolean; message?: string }>
+  register: (nome: string, email: string, password: string, cd: string) => Promise<{ success: boolean; message?: string }>
+  logout: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-export function useAuth() {
-  const context = useContext(AuthContext)
-  if (context === undefined) {
-    throw new Error('useAuth deve ser usado dentro de um AuthProvider')
-  }
-  return context
-}
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const [token, setToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  // Verificar se há token salvo e validá-lo
-  useEffect(() => {
-    const initAuth = async () => {
-      try {
-        const token = localStorage.getItem('token')
-        if (token) {
-          const response = await fetch('/api/auth/verify', {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          })
-          
-          if (response.ok) {
-            const data: AuthResponse = await response.json()
-            if (data.success && data.user) {
-              setUser(data.user)
-            } else {
-              localStorage.removeItem('token')
-              localStorage.removeItem('user')
-            }
-          } else {
-            localStorage.removeItem('token')
-            localStorage.removeItem('user')
-          }
-        }
-      } catch (error) {
-        console.error('Erro ao verificar autenticação:', error)
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
-      } finally {
-        setIsLoading(false)
-      }
-    }
+  const isAuthenticated = !!user && !!token
 
-    initAuth()
+  // Verificar se há token salvo no localStorage
+  useEffect(() => {
+    const savedToken = localStorage.getItem('auth_token')
+    if (savedToken) {
+      verifyToken(savedToken)
+    } else {
+      setIsLoading(false)
+    }
   }, [])
 
-  const login = async (email: string, password: string): Promise<AuthResponse> => {
+  const verifyToken = useCallback(async (tokenToVerify: string) => {
     try {
-      setIsLoading(true)
+      const response = await fetch('/api/auth/verify', {
+        headers: {
+          'Authorization': `Bearer ${tokenToVerify}`
+        }
+      })
+
+      const result: AuthResponse = await response.json()
+
+      if (result.success && result.user) {
+        setUser(result.user)
+        setToken(tokenToVerify)
+        localStorage.setItem('auth_token', tokenToVerify)
+      } else {
+        localStorage.removeItem('auth_token')
+        setUser(null)
+        setToken(null)
+      }
+    } catch (error) {
+      console.error('Erro ao verificar token:', error)
+      localStorage.removeItem('auth_token')
+      setUser(null)
+      setToken(null)
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
+
+  const login = useCallback(async (email: string, password: string) => {
+    setIsLoading(true)
+    try {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password })
       })
 
-      const data: AuthResponse = await response.json()
+      const result: AuthResponse = await response.json()
 
-      if (data.success && data.user && data.token) {
-        setUser(data.user)
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('user', JSON.stringify(data.user))
+      if (result.success && result.user && result.token) {
+        setUser(result.user)
+        setToken(result.token)
+        localStorage.setItem('auth_token', result.token)
+        return { success: true }
+      } else {
+        return { success: false, message: result.message }
       }
-
-      return data
     } catch (error) {
       console.error('Erro no login:', error)
-      return {
-        success: false,
-        message: 'Erro de conexão. Tente novamente.'
-      }
+      return { success: false, message: 'Erro de conexão' }
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [])
 
-  const register = async (nome: string, email: string, password: string, cd: string): Promise<AuthResponse> => {
+  const register = useCallback(async (nome: string, email: string, password: string, cd: string) => {
+    setIsLoading(true)
     try {
-      setIsLoading(true)
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nome, email, password, confirmPassword: password, cd }),
+        body: JSON.stringify({ nome, email, password, confirmPassword: password, cd })
       })
 
-      const data: AuthResponse = await response.json()
+      const result: AuthResponse = await response.json()
 
-      if (data.success && data.user && data.token) {
-        setUser(data.user)
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('user', JSON.stringify(data.user))
+      if (result.success && result.user && result.token) {
+        setUser(result.user)
+        setToken(result.token)
+        localStorage.setItem('auth_token', result.token)
+        return { success: true }
+      } else {
+        return { success: false, message: result.message }
       }
-
-      return data
     } catch (error) {
       console.error('Erro no registro:', error)
-      return {
-        success: false,
-        message: 'Erro de conexão. Tente novamente.'
-      }
+      return { success: false, message: 'Erro de conexão' }
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [])
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(null)
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-  }
+    setToken(null)
+    localStorage.removeItem('auth_token')
+  }, [])
 
-  const value: AuthContextType = {
+  const value = {
     user,
+    token,
+    isAuthenticated,
+    isLoading,
     login,
     register,
-    logout,
-    isLoading,
-    isAuthenticated: !!user
+    logout
   }
 
   return (
@@ -145,4 +140,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       {children}
     </AuthContext.Provider>
   )
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext)
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider')
+  }
+  return context
 }
