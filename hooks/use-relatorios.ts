@@ -1,4 +1,4 @@
-// hooks/use-relatorios.ts
+
 "use client"
 
 import { useState, useCallback } from 'react'
@@ -90,13 +90,11 @@ export function useRelatorios() {
         throw new Error('Erro ao exportar relatório')
       }
 
-      // Criar blob e download do arquivo
       const blob = await response.blob()
       const url = window.URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
       
-      // Obter nome do arquivo do header ou usar nome padrão
       const contentDisposition = response.headers.get('content-disposition')
       let filename = `relatorio_movimentos_${new Date().toISOString().split('T')[0]}.${formato}`
       

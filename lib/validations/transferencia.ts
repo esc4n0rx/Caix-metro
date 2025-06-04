@@ -1,4 +1,4 @@
-// lib/validations/transferencia.ts
+
 import { z } from 'zod'
 
 export const createTransferenciaSchema = z.object({

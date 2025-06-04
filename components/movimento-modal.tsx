@@ -37,11 +37,10 @@ export function MovimentoModal({ isOpen, onClose, tipo, origemFixa, destinoFixo 
     e.preventDefault()
     setIsLoading(true)
 
-    // Simulate API call
     setTimeout(() => {
       setIsLoading(false)
       onClose()
-      // Reset form
+
       setOrigem(origemFixa || "")
       setDestino(destinoFixo || "")
       setAtivos({})

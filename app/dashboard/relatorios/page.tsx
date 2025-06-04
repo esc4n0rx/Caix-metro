@@ -76,7 +76,7 @@ export default function RelatoriosPage() {
     try {
       await exportarRelatorio(filters, formato)
     } catch (err) {
-      // Erro já tratado no hook
+
     } finally {
       setIsExporting(false)
     }
@@ -147,7 +147,7 @@ export default function RelatoriosPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Relatórios Avançados</h1>
@@ -171,7 +171,7 @@ export default function RelatoriosPage() {
         </div>
       </div>
 
-      {/* Filtros */}
+
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -183,7 +183,7 @@ export default function RelatoriosPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Período */}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Data Início</Label>
@@ -203,7 +203,6 @@ export default function RelatoriosPage() {
             </div>
           </div>
 
-          {/* Filtros de Tipo e Status */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Tipo de Movimento</Label>
@@ -242,7 +241,6 @@ export default function RelatoriosPage() {
             </div>
           </div>
 
-          {/* Filtros de Local */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Centro de Distribuição</Label>
@@ -303,7 +301,6 @@ export default function RelatoriosPage() {
         </CardContent>
       </Card>
 
-      {/* Resultados */}
       {error && (
         <Alert variant="destructive">
           <AlertDescription>{error}</AlertDescription>
@@ -312,7 +309,7 @@ export default function RelatoriosPage() {
 
       {relatorio && (
         <>
-          {/* Estatísticas Gerais */}
+
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -374,7 +371,7 @@ export default function RelatoriosPage() {
                 </Card>
               </div>
 
-              {/* Breakdown por Status */}
+
               <Separator className="my-4" />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="text-center">
@@ -399,7 +396,7 @@ export default function RelatoriosPage() {
             </CardContent>
           </Card>
 
-          {/* Exportação */}
+
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -444,7 +441,7 @@ export default function RelatoriosPage() {
             </CardContent>
           </Card>
 
-          {/* Lista de Movimentos Detalhada */}
+
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">

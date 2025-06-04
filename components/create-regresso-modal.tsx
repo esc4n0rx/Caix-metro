@@ -1,4 +1,4 @@
-// components/create-regresso-modal.tsx
+
 "use client"
 
 import React, { useState, useEffect } from "react"
@@ -18,7 +18,6 @@ import { useAuth } from "@/contexts/auth-context"
 import { lojas } from "@/lib/data"
 import { z } from "zod"
 
-// Schema simplificado só para os campos básicos
 const basicFormSchema = z.object({
   loja_origem: z.string().min(1, 'Loja de origem é obrigatória'),
   observacoes: z.string().optional()
@@ -54,7 +53,6 @@ export function CreateRegressoModal({ isOpen, onClose, onSuccess }: CreateRegres
     }
   })
 
-  // Carregar tipos de ativos do banco quando abrir o modal
   useEffect(() => {
     const fetchTiposAtivos = async () => {
       if (!isOpen || !token) return
@@ -85,12 +83,12 @@ export function CreateRegressoModal({ isOpen, onClose, onSuccess }: CreateRegres
 
   const handleAddAtivo = () => {
     setSelectedAtivos(prev => [...prev, { tipo_ativo_id: "", quantidade: 1 }])
-    setAtivosError("") // Limpar erro quando adicionar novo ativo
+    setAtivosError("")
   }
 
   const handleRemoveAtivo = (index: number) => {
     setSelectedAtivos(prev => prev.filter((_, i) => i !== index))
-    // Se não sobrar nenhum ativo, mostrar erro
+
     if (selectedAtivos.length === 1) {
       setAtivosError("Pelo menos um ativo deve ser selecionado")
     }
@@ -102,17 +100,16 @@ export function CreateRegressoModal({ isOpen, onClose, onSuccess }: CreateRegres
         i === index ? { ...ativo, [field]: value } : ativo
       )
     )
-    setAtivosError("") // Limpar erro quando modificar ativo
+    setAtivosError("") 
   }
 
   const validateAtivos = () => {
-    // Verificar se há pelo menos um ativo
+
     if (selectedAtivos.length === 0) {
       setAtivosError("Pelo menos um ativo deve ser selecionado")
       return false
     }
 
-    // Verificar se todos os ativos têm tipo e quantidade válidos
     const ativosValidos = selectedAtivos.filter(ativo => 
       ativo.tipo_ativo_id && ativo.tipo_ativo_id.trim() !== "" && ativo.quantidade > 0
     )
@@ -122,7 +119,6 @@ export function CreateRegressoModal({ isOpen, onClose, onSuccess }: CreateRegres
       return false
     }
 
-    // Verificar duplicatas
     const tiposSet = new Set()
     for (const ativo of ativosValidos) {
       if (tiposSet.has(ativo.tipo_ativo_id)) {
@@ -136,13 +132,13 @@ export function CreateRegressoModal({ isOpen, onClose, onSuccess }: CreateRegres
  }
 
  const handleSubmit = async (data: BasicFormData) => {
-   // Validar ativos antes de enviar
+
    if (!validateAtivos()) {
      return
    }
 
    try {
-     // Filtrar apenas ativos válidos
+
      const ativosValidos = selectedAtivos.filter(ativo => 
        ativo.tipo_ativo_id && ativo.tipo_ativo_id.trim() !== "" && ativo.quantidade > 0
      )
@@ -157,7 +153,7 @@ export function CreateRegressoModal({ isOpen, onClose, onSuccess }: CreateRegres
      onClose()
      handleReset()
    } catch (err) {
-     // Erro já tratado no hook
+
    }
  }
 
@@ -172,7 +168,6 @@ export function CreateRegressoModal({ isOpen, onClose, onSuccess }: CreateRegres
    handleReset()
  }
 
- // Verificar se todos os tipos de ativos já foram selecionados
  const tiposDisponiveis = tiposAtivos.filter(tipo => 
    !selectedAtivos.some(ativo => ativo.tipo_ativo_id === tipo.id)
  )
@@ -258,7 +253,7 @@ export function CreateRegressoModal({ isOpen, onClose, onSuccess }: CreateRegres
                            <SelectValue placeholder="Selecione o tipo" />
                          </SelectTrigger>
                          <SelectContent>
-                           {/* Mostrar tipo já selecionado + tipos disponíveis */}
+
                            {ativo.tipo_ativo_id && (
                              <SelectItem value={ativo.tipo_ativo_id}>
                                {tiposAtivos.find(t => t.id === ativo.tipo_ativo_id)?.nome} 

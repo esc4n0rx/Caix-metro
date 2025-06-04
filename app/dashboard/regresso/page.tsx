@@ -1,4 +1,4 @@
-// app/dashboard/regresso/page.tsx
+
 "use client"
 
 import React, { useState, useEffect } from "react"
@@ -45,7 +45,7 @@ export default function RegressoPage() {
       setRegressos(result.data)
       setPagination(result.pagination)
     } catch (err) {
-      // Erro já tratado no hook
+
     }
   }
 
@@ -53,7 +53,7 @@ export default function RegressoPage() {
     setFilters(prev => ({
       ...prev,
       [key]: value === 'todos' ? undefined : value,
-      page: 1 // Reset page when filter changes
+      page: 1 
     }))
   }
 
@@ -121,7 +121,7 @@ export default function RegressoPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Regressos</h1>
@@ -138,7 +138,6 @@ export default function RegressoPage() {
         </Button>
       </div>
 
-      {/* Filtros */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -211,7 +210,6 @@ export default function RegressoPage() {
         </CardContent>
       </Card>
 
-      {/* Resultados */}
       {error && (
         <Alert variant="destructive">
           <AlertDescription>{error}</AlertDescription>
@@ -229,7 +227,6 @@ export default function RegressoPage() {
         </Card>
       ) : (
         <>
-          {/* Lista de Regressos */}
           <div className="space-y-4">
             {regressos.length === 0 ? (
               <Card>
@@ -293,7 +290,6 @@ export default function RegressoPage() {
             )}
           </div>
 
-          {/* Paginação */}
           {pagination.totalPages > 1 && (
             <Card>
               <CardContent className="p-4">
@@ -331,7 +327,6 @@ export default function RegressoPage() {
        </>
      )}
 
-     {/* Modais */}
      <CreateRegressoModal
        isOpen={isCreateModalOpen}
        onClose={() => setIsCreateModalOpen(false)}

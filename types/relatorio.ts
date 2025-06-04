@@ -1,4 +1,4 @@
-// types/relatorio.ts
+
 export interface RelatorioEstatisticas {
   data: string
   total_movimentos: number

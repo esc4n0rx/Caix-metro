@@ -22,7 +22,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const isAuthenticated = !!user && !!token
 
-  // Verificar se há token salvo no localStorage
   useEffect(() => {
     const savedToken = localStorage.getItem('auth_token')
     if (savedToken) {

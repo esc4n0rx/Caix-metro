@@ -44,7 +44,7 @@ export default function RemessaPage() {
       setRemessas(result.data)
       setPagination(result.pagination)
     } catch (err) {
-      // Erro já tratado no hook
+
     }
   }
 
@@ -120,7 +120,7 @@ export default function RemessaPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Remessas</h1>
@@ -137,7 +137,6 @@ export default function RemessaPage() {
         </Button>
       </div>
 
-      {/* Filtros */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -210,7 +209,6 @@ export default function RemessaPage() {
         </CardContent>
       </Card>
 
-      {/* Resultados */}
       {error && (
         <Alert variant="destructive">
           <AlertDescription>{error}</AlertDescription>
@@ -228,7 +226,7 @@ export default function RemessaPage() {
         </Card>
       ) : (
         <>
-          {/* Lista de Remessas */}
+
           <div className="space-y-4">
             {remessas.length === 0 ? (
               <Card>
@@ -292,7 +290,6 @@ export default function RemessaPage() {
             )}
           </div>
 
-          {/* Paginação */}
           {pagination.totalPages > 1 && (
             <Card>
               <CardContent className="p-4">
@@ -330,7 +327,6 @@ export default function RemessaPage() {
         </>
       )}
 
-      {/* Modais */}
       <CreateRemessaModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}

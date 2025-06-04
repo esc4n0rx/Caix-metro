@@ -1,4 +1,3 @@
-// hooks/use-transferencias.ts
 "use client"
 
 import { useState, useCallback } from 'react'

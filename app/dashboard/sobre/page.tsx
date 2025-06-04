@@ -12,7 +12,7 @@ export default function SobrePage() {
       </div>
 
       <div className="grid gap-6">
-        {/* Hero Section */}
+
         <Card>
           <CardContent className="p-0">
             <div className="relative w-full h-64 rounded-t-lg overflow-hidden">
@@ -27,7 +27,6 @@ export default function SobrePage() {
           </CardContent>
         </Card>
 
-        {/* Informações do Sistema */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
@@ -88,7 +87,6 @@ export default function SobrePage() {
           </Card>
         </div>
 
-        {/* Finalidade */}
         <Card>
           <CardHeader>
             <CardTitle>Finalidade do Sistema</CardTitle>
@@ -119,7 +117,6 @@ export default function SobrePage() {
           </CardContent>
         </Card>
 
-        Logos e Contato
         <Card>
           <CardHeader>
             <CardTitle>Empresa</CardTitle>

@@ -1,4 +1,4 @@
-// components/regresso-details-modal.tsx
+
 "use client"
 
 import React, { useState, useEffect } from "react"
@@ -53,7 +53,7 @@ export function RegressoDetailsModal({ regressoId, isOpen, onClose, onSuccess }:
       const data = await fetchRegresso(regressoId)
       setRegresso(data)
     } catch (err) {
-      // Erro já tratado no hook
+
     }
   }
 
@@ -67,7 +67,7 @@ export function RegressoDetailsModal({ regressoId, isOpen, onClose, onSuccess }:
       onSuccess()
       form.reset()
     } catch (err) {
-      // Erro já tratado no hook
+
     } finally {
       setIsUpdating(false)
     }
@@ -124,7 +124,7 @@ export function RegressoDetailsModal({ regressoId, isOpen, onClose, onSuccess }:
           </div>
         ) : regresso ? (
           <div className="space-y-6">
-            {/* Informações Básicas */}
+
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
@@ -188,7 +188,7 @@ export function RegressoDetailsModal({ regressoId, isOpen, onClose, onSuccess }:
               </CardContent>
             </Card>
 
-            {/* Ativos */}
+
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -213,7 +213,7 @@ export function RegressoDetailsModal({ regressoId, isOpen, onClose, onSuccess }:
               </CardContent>
             </Card>
 
-            {/* Alteração de Status */}
+
             {canUpdateStatus && (
               <Card>
                 <CardHeader>

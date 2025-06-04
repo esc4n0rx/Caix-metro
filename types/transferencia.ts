@@ -1,4 +1,4 @@
-// types/transferencia.ts
+
 export interface Transferencia {
   id: string
   codigo: string

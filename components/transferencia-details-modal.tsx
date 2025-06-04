@@ -1,4 +1,3 @@
-// components/transferencia-details-modal.tsx
 "use client"
 
 import React, { useState, useEffect } from "react"
@@ -53,7 +52,7 @@ export function TransferenciaDetailsModal({ transferenciaId, isOpen, onClose, on
       const data = await fetchTransferencia(transferenciaId)
       setTransferencia(data)
     } catch (err) {
-      // Erro já tratado no hook
+
     }
   }
 
@@ -67,7 +66,6 @@ export function TransferenciaDetailsModal({ transferenciaId, isOpen, onClose, on
       onSuccess()
       form.reset()
     } catch (err) {
-      // Erro já tratado no hook
     } finally {
       setIsUpdating(false)
     }
@@ -124,7 +122,7 @@ export function TransferenciaDetailsModal({ transferenciaId, isOpen, onClose, on
           </div>
         ) : transferencia ? (
           <div className="space-y-6">
-            {/* Informações Básicas */}
+
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
@@ -188,7 +186,6 @@ export function TransferenciaDetailsModal({ transferenciaId, isOpen, onClose, on
               </CardContent>
             </Card>
 
-            {/* Ativos */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -213,7 +210,6 @@ export function TransferenciaDetailsModal({ transferenciaId, isOpen, onClose, on
               </CardContent>
             </Card>
 
-            {/* Alteração de Status */}
             {canUpdateStatus && (
               <Card>
                 <CardHeader>

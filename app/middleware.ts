@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import { verifyToken } from '@/lib/auth'
 
 export function middleware(request: NextRequest) {
-  // Rotas que precisam de autenticação
+
   const protectedPaths = ['/dashboard']
   const isProtectedPath = protectedPaths.some(path => 
     request.nextUrl.pathname.startsWith(path)

@@ -1,4 +1,3 @@
-// types/regresso.ts
 export interface Regresso {
   id: string
   codigo: string

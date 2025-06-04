@@ -1,4 +1,4 @@
-// app/dashboard/transferencia/page.tsx
+
 "use client"
 
 import React, { useState, useEffect } from "react"
@@ -45,7 +45,7 @@ export default function TransferenciaPage() {
       setTransferencias(result.data)
       setPagination(result.pagination)
     } catch (err) {
-      // Erro já tratado no hook
+
     }
   }
 
@@ -53,7 +53,7 @@ export default function TransferenciaPage() {
     setFilters(prev => ({
       ...prev,
       [key]: value === 'todos' ? undefined : value,
-      page: 1 // Reset page when filter changes
+      page: 1 
     }))
   }
 
@@ -121,7 +121,7 @@ export default function TransferenciaPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Transferências</h1>
@@ -138,7 +138,6 @@ export default function TransferenciaPage() {
         </Button>
       </div>
 
-      {/* Filtros */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -211,7 +210,7 @@ export default function TransferenciaPage() {
         </CardContent>
       </Card>
 
-      {/* Resultados */}
+
       {error && (
         <Alert variant="destructive">
           <AlertDescription>{error}</AlertDescription>
@@ -229,7 +228,7 @@ export default function TransferenciaPage() {
         </Card>
       ) : (
         <>
-          {/* Lista de Transferências */}
+
           <div className="space-y-4">
             {transferencias.length === 0 ? (
               <Card>
@@ -293,7 +292,6 @@ export default function TransferenciaPage() {
             )}
           </div>
 
-          {/* Paginação */}
           {pagination.totalPages > 1 && (
             <Card>
               <CardContent className="p-4">
@@ -331,7 +329,6 @@ export default function TransferenciaPage() {
        </>
      )}
 
-     {/* Modais */}
      <CreateTransferenciaModal
        isOpen={isCreateModalOpen}
        onClose={() => setIsCreateModalOpen(false)}

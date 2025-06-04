@@ -1,4 +1,4 @@
-// components/create-transferencia-modal.tsx
+
 "use client"
 
 import React, { useState, useEffect } from "react"
@@ -149,7 +149,7 @@ export function CreateTransferenciaModal({ isOpen, onClose, onSuccess }: CreateT
      onClose()
      handleReset()
    } catch (err) {
-     // Erro já tratado no hook
+
    }
  }
 
@@ -164,10 +164,9 @@ export function CreateTransferenciaModal({ isOpen, onClose, onSuccess }: CreateT
    handleReset()
  }
 
- // Filtrar CDs disponíveis (excluir o CD do usuário)
  const cdsDisponiveis = centrosDistribuicao.filter(cd => cd.nome !== user?.cd)
  
- // Verificar se todos os tipos de ativos já foram selecionados
+
  const tiposDisponiveis = tiposAtivos.filter(tipo => 
    !selectedAtivos.some(ativo => ativo.tipo_ativo_id === tipo.id)
  )

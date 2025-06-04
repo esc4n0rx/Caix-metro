@@ -52,7 +52,7 @@ export function RemessaDetailsModal({ remessaId, isOpen, onClose, onSuccess }: R
       const data = await fetchRemessa(remessaId)
       setRemessa(data)
     } catch (err) {
-      // Erro já tratado no hook
+
     }
   }
 
@@ -66,7 +66,7 @@ export function RemessaDetailsModal({ remessaId, isOpen, onClose, onSuccess }: R
       onSuccess()
       form.reset()
     } catch (err) {
-      // Erro já tratado no hook
+
     } finally {
       setIsUpdating(false)
     }
@@ -123,7 +123,7 @@ export function RemessaDetailsModal({ remessaId, isOpen, onClose, onSuccess }: R
           </div>
         ) : remessa ? (
           <div className="space-y-6">
-            {/* Informações Básicas */}
+
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
@@ -187,7 +187,6 @@ export function RemessaDetailsModal({ remessaId, isOpen, onClose, onSuccess }: R
               </CardContent>
             </Card>
 
-            {/* Ativos */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -212,7 +211,6 @@ export function RemessaDetailsModal({ remessaId, isOpen, onClose, onSuccess }: R
               </CardContent>
             </Card>
 
-            {/* Alteração de Status */}
             {canUpdateStatus && (
               <Card>
                 <CardHeader>
