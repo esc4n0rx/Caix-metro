@@ -14,7 +14,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { LayoutDashboard, Send, RotateCcw, ArrowLeftRight, BarChart3, Settings, Info, LogOut } from "lucide-react"
+import { useAuth } from "@/contexts/auth-context"
+import { User } from "@/types/auth"
 
 const menuItems = [
   {
@@ -55,15 +58,16 @@ const menuItems = [
 ]
 
 interface AppSidebarProps {
-  user: any
+  user: User
 }
 
 export function AppSidebar({ user }: AppSidebarProps) {
   const router = useRouter()
   const pathname = usePathname()
+  const { logout } = useAuth()
 
   const handleLogout = () => {
-    localStorage.removeItem("user")
+    logout()
     router.push("/")
   }
 
@@ -97,8 +101,15 @@ export function AppSidebar({ user }: AppSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <div className="p-2">
-          <div className="text-xs text-muted-foreground mb-2">{user.cd}</div>
+        <div className="p-2 space-y-3">
+          <div className="space-y-1">
+            <div className="text-sm font-medium">{user.nome}</div>
+            <div className="text-xs text-muted-foreground">{user.email}</div>
+            <div className="text-xs text-muted-foreground">{user.cd}</div>
+            <Badge variant={user.role === 'admin' ? 'default' : 'secondary'} className="text-xs">
+              {user.role === 'admin' ? 'Administrador' : 'Operador'}
+            </Badge>
+          </div>
           <Button variant="outline" size="sm" className="w-full" onClick={handleLogout}>
             <LogOut className="mr-2 h-4 w-4" />
             Sair

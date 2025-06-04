@@ -9,8 +9,8 @@ export const lojas = [
 
 export const centrosDistribuicao = [
   { id: "1", nome: "CD PAVUNA" },
-  { id: "2", nome: "CD DUQUE DE CAXIAS" },
-  { id: "3", nome: "CD NOVA IGUACU" },
+  { id: "2", nome: "CD SÃO PAULO" },
+  { id: "3", nome: "CD ESPIRITO SANTO" },
 ]
 
 export const tiposAtivos = [
